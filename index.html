@@ -1,0 +1,214 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Missão Geografia: Campo e Cidade</title>
+<style>
+:root{color-scheme:dark;--bg:#10284a;--bg2:#1b4b7a;--card:#fff8e7;--ink:#1d2b3a;--sun:#ffc93c;--leaf:#3ddc84;--coral:#ff5f6d;--sky:#5cc8ff;
+box-sizing:border-box;padding-top:env(safe-area-inset-top,0px);padding-bottom:env(safe-area-inset-bottom,0px)}
+*{box-sizing:border-box}
+html,body{margin:0;min-height:100%}
+body{font-family:Fredoka,"Trebuchet MS",sans-serif;color:var(--card);background:linear-gradient(180deg,var(--bg) 0%,var(--bg2) 70%,#2f7a4a 100%) fixed;line-height:1.35}
+main{max-width:560px;margin:0 auto;padding:16px}
+.screen{display:none}.screen.on{display:block}
+.hero{text-align:center;padding:28px 8px}
+.hero .big{font-size:76px;line-height:1;filter:drop-shadow(0 6px 0 rgba(0,0,0,.25))}
+h1{font-size:2.3rem;margin:12px 0 4px;color:var(--sun);text-shadow:0 4px 0 rgba(0,0,0,.3)}
+.hero p{margin:6px 0 22px;opacity:.9}
+.btn{font:inherit;font-weight:700;font-size:1.2rem;border:0;border-radius:18px;padding:14px 28px;cursor:pointer;background:var(--sun);color:#3b2a00;box-shadow:0 6px 0 #c4921a;transition:transform .08s,box-shadow .08s}
+.btn:active{transform:translateY(5px);box-shadow:0 1px 0 #c4921a}
+.btn:focus-visible,.opt:focus-visible{outline:3px solid var(--sky);outline-offset:3px}
+.hud{display:flex;align-items:center;gap:12px;margin-bottom:14px}
+.hearts{font-size:1.4rem;letter-spacing:2px;min-width:80px}
+.bar{flex:1;height:16px;background:rgba(0,0,0,.35);border-radius:99px;overflow:hidden}
+.bar i{display:block;height:100%;width:0;background:linear-gradient(90deg,var(--leaf),var(--sun));border-radius:99px;transition:width .4s}
+.xp{font-weight:700;color:var(--sun);min-width:64px;text-align:right}
+.q{background:var(--card);color:var(--ink);border-radius:26px;padding:22px 20px;box-shadow:0 8px 0 rgba(0,0,0,.3);position:relative}
+.q .ic{position:absolute;top:-26px;left:18px;width:58px;height:58px;border-radius:50%;background:var(--sun);display:grid;place-items:center;font-size:30px;box-shadow:0 4px 0 #c4921a}
+.q .n{text-align:right;font-weight:600;font-size:.9rem;color:#6b7a8a}
+.q h2{font-size:1.35rem;margin:10px 0 0}
+.opts{display:grid;gap:12px;margin:20px 0}
+.opt{font:inherit;font-weight:500;font-size:1.05rem;text-align:left;border:0;border-radius:16px;padding:14px 16px;cursor:pointer;background:#fff;color:var(--ink);box-shadow:0 5px 0 #b9c3cf;display:flex;gap:12px;align-items:center}
+.opt b{flex:none;width:32px;height:32px;border-radius:10px;background:var(--sky);display:grid;place-items:center;color:#06304a}
+.opt:active:not(:disabled){transform:translateY(4px);box-shadow:0 1px 0 #b9c3cf}
+.opt.ok{background:var(--leaf);box-shadow:0 5px 0 #1f9c57}
+.opt.no{background:var(--coral);color:#fff;box-shadow:0 5px 0 #b3303c;animation:sh .35s}
+.opt:disabled{cursor:default}
+@keyframes sh{25%{transform:translateX(-7px)}75%{transform:translateX(7px)}}
+.fb{display:none;border-radius:18px;padding:14px 16px;margin-bottom:14px;font-weight:500}
+.fb.show{display:block}.fb.g{background:rgba(61,220,132,.2);border:2px solid var(--leaf)}.fb.r{background:rgba(255,95,109,.2);border:2px solid var(--coral)}
+.fb strong{display:block;font-size:1.15rem;margin-bottom:2px}
+.next{display:none;width:100%}.next.show{display:block}
+.end{text-align:center;padding:20px 4px}
+.stars{font-size:54px;letter-spacing:6px}
+.score{font-size:3rem;font-weight:700;color:var(--sun);margin:4px 0}
+.rank{display:inline-block;background:var(--card);color:var(--ink);border-radius:99px;padding:8px 20px;font-weight:700;margin:8px 0 18px}
+.tools{display:flex;gap:12px;justify-content:space-between;margin-top:6px}
+.mini{font:inherit;font-weight:600;font-size:1rem;border:0;border-radius:14px;padding:10px 16px;cursor:pointer;background:rgba(255,248,231,.15);color:var(--card);box-shadow:0 4px 0 rgba(0,0,0,.3)}
+.mini:active{transform:translateY(3px);box-shadow:0 1px 0 rgba(0,0,0,.3)}
+.mini:focus-visible{outline:3px solid var(--sky);outline-offset:3px}
+.lvls{display:grid;gap:14px;max-width:360px;margin:0 auto}
+.lvl{font:inherit;border:0;border-radius:20px;padding:14px 18px;cursor:pointer;display:flex;align-items:center;gap:14px;text-align:left;color:#10233a;box-shadow:0 6px 0 rgba(0,0,0,.3)}
+.lvl:active{transform:translateY(5px);box-shadow:0 1px 0 rgba(0,0,0,.3)}
+.lvl:focus-visible,.mute:focus-visible{outline:3px solid var(--sky);outline-offset:3px}
+.lvl .e{font-size:34px}.lvl strong{display:block;font-size:1.3rem}.lvl span{font-size:.95rem;font-weight:500}
+.lvl.f{background:var(--leaf)}.lvl.n{background:var(--sun)}.lvl.d{background:var(--coral);color:#fff}
+.mute{position:fixed;top:calc(env(safe-area-inset-top,0px) + 10px);right:12px;z-index:5;font-size:1.3rem;border:0;border-radius:50%;width:46px;height:46px;cursor:pointer;background:rgba(0,0,0,.4);color:#fff}
+.timer{text-align:center;font-weight:700;font-size:1.3rem;background:rgba(0,0,0,.35);border-radius:99px;padding:6px 16px;width:max-content;margin:0 auto 22px}
+.timer.low{background:var(--coral);animation:pl .6s infinite alternate}
+@keyframes pl{to{transform:scale(1.08)}}
+.lvl.r{background:var(--sky)}
+details{background:var(--card);color:var(--ink);border-radius:18px;margin-bottom:12px;box-shadow:0 5px 0 rgba(0,0,0,.3);overflow:hidden}
+summary{padding:14px 16px;font-weight:600;font-size:1.05rem;cursor:pointer;list-style:none}
+summary::-webkit-details-marker{display:none}
+summary:focus-visible{outline:3px solid var(--sky);outline-offset:-3px}
+details[open] summary{background:var(--sun)}
+.dt{padding:12px 16px 14px;font-size:.98rem;line-height:1.5}.dt p{margin:0 0 8px}.dt ul{margin:0 0 4px;padding-left:20px}
+.sumh{text-align:center;margin:8px 0 4px;color:var(--sun);font-size:1.7rem}
+.sumh+p{text-align:center;margin:0 0 16px;opacity:.9}
+@media (prefers-reduced-motion:reduce){*{animation:none!important;transition:none!important}}
+</style>
+</head>
+<body>
+<main>
+<button class="mute" id="mute" aria-label="Ligar ou desligar a música">🔊</button>
+<section id="start" class="screen on">
+  <div class="hero">
+    <div class="big">🚜🏙️</div>
+    <h1>Missão Geografia</h1>
+    <p>Do campo à cidade: 11 desafios para você mostrar o que sabe. Acerte para ganhar XP, mas cuidado com as vidas!</p>
+    <p><strong>Escolha o nível. O tempo vale para cada pergunta:</strong></p>
+    <div class="lvls">
+      <button class="lvl f" data-t="90"><span class="e">🌱</span><div><strong>Fácil</strong><span>1:30 por pergunta</span></div></button>
+      <button class="lvl n" data-t="60"><span class="e">⚡</span><div><strong>Normal</strong><span>1:00 por pergunta</span></div></button>
+      <button class="lvl d" data-t="30"><span class="e">🔥</span><div><strong>Difícil</strong><span>0:30 por pergunta</span></div></button>
+      <button class="lvl r" id="rs"><span class="e">📖</span><div><strong>Resumo para estudar</strong><span>9 tópicos antes de jogar</span></div></button>
+    </div>
+  </div>
+</section>
+
+<section id="sum" class="screen">
+  <h2 class="sumh">📖 Resumo de Geografia</h2><p>⭐ Toque em cada tópico. As perguntas de prioridade do quiz saem daqui.</p>
+  <details><summary>1. 🌾 O espaço rural</summary><div class="dt"><p>É a área onde predominam <b>agricultura, pecuária e extrativismo</b>: plantações, pastagens, fazendas e comunidades rurais.</p><ul><li><b>Subsistência:</b> produz para a própria família comer.</li><li><b>Comercial:</b> produz para vender no mercado.</li><li><b>Intensiva:</b> usa técnicas, máquinas, fertilizantes e sementes selecionadas para produzir mais.</li></ul></div></details>
+  <details><summary>2. 🌱 O desgaste do solo</summary><div class="dt"><p>Plantar a mesma cultura por muitos anos sem cuidado causa <b>esgotamento dos nutrientes</b> e perda de fertilidade.</p><ul><li>Rotação de culturas</li><li>Adubação adequada</li><li>Proteção contra a erosão</li><li>Uso responsável da água</li></ul></div></details>
+  <details><summary>3. 🐄 A pecuária</summary><div class="dt"><p>Criação de animais (bois, porcos, ovelhas, aves) que fornece carne, leite, ovos e matérias-primas.</p><ul><li><b>Extensiva:</b> pastagens, grandes áreas, menos tecnologia.</li><li><b>Intensiva:</b> manejo, alimentação controlada e tecnologia, em espaços menores.</li></ul></div></details>
+  <details><summary>4. ⭐🧪 A Revolução Verde</summary><div class="dt"><p>Modernização da agricultura (2ª metade do séc. XX) com máquinas, fertilizantes químicos, agrotóxicos, irrigação e sementes selecionadas.</p><ul><li>👍 Mais produtividade e mais alimentos</li><li>👍 Mais máquinas e tecnologia</li><li>👎 Contaminação da água e do solo, perda de biodiversidade</li><li>👎 Desigualdade entre produtores</li></ul></div></details>
+  <details><summary>5. 🏙️ O espaço urbano</summary><div class="dt"><p>Áreas das cidades, com moradias, ruas, prédios, comércio, indústrias e serviços. Precisa de <b>planejamento</b> para garantir moradia, saneamento, água, energia, transporte, escolas e hospitais.</p></div></details>
+  <details><summary>6. 🏭 Urbanização e industrialização</summary><div class="dt"><p><b>Urbanização:</b> crescimento das cidades e da população urbana. As fábricas ofereceram empregos e atraíram trabalhadores.</p><p><b>Êxodo rural:</b> saída do campo para a cidade, em busca de emprego, educação, saúde e vida melhor.</p><p>Sem planejamento: falta de moradia, trânsito, desigualdade, áreas de risco, falta de saneamento e poluição.</p></div></details>
+  <details><summary>7. 📐 O planejamento urbano</summary><div class="dt"><p>Organizar o crescimento e o funcionamento das cidades para melhorar a qualidade de vida: áreas residenciais, comerciais e industriais, ruas, escolas, hospitais, praças e saneamento. Cidades mais organizadas, acessíveis, seguras e sustentáveis.</p></div></details>
+  <details><summary>8. 🗺️ A conurbação</summary><div class="dt"><p>Duas ou mais cidades crescem e suas áreas construídas se encontram, sem separação evidente. Acontece em regiões metropolitanas.</p></div></details>
+  <details><summary>9. 🧭 Os setores da economia</summary><div class="dt"><ul><li><b>Primário:</b> retira da natureza (agricultura, pecuária, pesca, extrativismo).</li><li><b>Secundário:</b> transforma matéria-prima (roupas, aço, automóveis).</li><li><b>Terciário:</b> comércio e serviços (lojas, hospitais, escolas, bancos).</li></ul><p>Os três se relacionam: a agricultura fornece matéria-prima à indústria, que produz o que o comércio vende.</p></div></details>
+  <p style="text-align:center;margin-top:18px"><button class="btn" id="sback">⬅ Voltar aos níveis</button></p>
+</section>
+
+<section id="game" class="screen">
+  <div class="hud"><div class="hearts" id="hearts"></div><div class="bar"><i id="fill"></i></div><div class="xp" id="xp">0 XP</div></div>
+  <div class="timer" id="timer"></div>
+  <div class="q"><div class="ic" id="ic"></div><div class="n" id="num"></div><h2 id="qt"></h2></div>
+  <div class="opts" id="opts"></div>
+  <div class="fb" id="fb"></div>
+  <button class="btn next" id="next">Próximo desafio ➜</button>
+  <div class="tools"><button class="mini" id="home">🏠 Início</button><button class="mini" id="skip">⏭️ Pular</button></div>
+</section>
+
+<section id="end" class="screen">
+  <div class="end">
+    <div class="stars" id="stars"></div>
+    <div class="score" id="fscore"></div>
+    <div class="rank" id="rank"></div>
+    <p id="msg"></p>
+    <button class="btn" id="again">Jogar de novo 🔄</button>
+  </div>
+</section>
+</main>
+<script>
+var Q=[
+["🌾","O que é o espaço rural?","Área onde predominam agricultura, pecuária e extrativismo",["Área onde predominam fábricas, comércio e serviços","Área formada só por cidades grandes","Área sem nenhuma atividade econômica"],"No espaço rural (campo) predominam a agricultura, a pecuária e o extrativismo."],
+["🥕","Na agricultura de subsistência, o agricultor planta principalmente para…","alimentar a própria família",["vender no mercado e ter lucro","exportar para outros países","abastecer grandes indústrias"],"Na subsistência, o agricultor planta para comer com a família."],
+["🚜","Qual é o principal objetivo da agricultura comercial?","Produzir para vender no mercado e obter lucro",["Produzir só para a família comer","Plantar sem usar máquinas","Evitar qualquer venda"],"Na agricultura comercial, o agricultor planta para vender."],
+["🌱","O que pode acontecer quando se planta a mesma coisa por anos, sem cuidados com o solo?","Esgota os nutrientes e o solo perde fertilidade",["O solo fica cada vez mais fértil","O solo vira rocha","Nada muda"],"Para conservar o solo: rotação de culturas e proteção contra a erosão."],
+["🐄","Como é a pecuária extensiva?","Animais criados em grandes espaços, com pouca tecnologia",["Animais em espaços pequenos com muita tecnologia","Só criação de peixes","Animais dentro das cidades"],"Já a intensiva usa tecnologia para produzir mais em espaços menores."],
+["🧪","O que foi a Revolução Verde?","Modernização da agricultura, com máquinas e tecnologia para produzir mais",["Um movimento só para plantar árvores","A volta aos métodos antigos de plantio","A criação de parques ecológicos"],"Benefícios: mais produtividade e mais máquinas. Problemas: desigualdade social e falta de moradias adequadas."],
+["🏙️","O que é urbanização?","O processo de crescimento das cidades",["O crescimento das fazendas","A diminuição da população urbana","A criação de áreas rurais"],"A industrialização criou empregos nas fábricas e atraiu trabalhadores para as cidades."],
+["🧳","O que é êxodo rural?","A saída de pessoas do campo para as cidades",["A mudança de pessoas da cidade para o campo","Uma viagem de férias","A mudança entre países"],"As pessoas saem do campo em busca de emprego, educação, saúde e melhores condições de vida."],
+["📐","O que é planejamento urbano?","Organizar o crescimento e o funcionamento da cidade para melhorar a vida da população",["Construir sem nenhuma regra","Fechar as fábricas","Impedir pessoas de morar na cidade"],"Exemplos: organizar áreas residenciais, comerciais e industriais."],
+["🗺️","O que é conurbação?","Quando duas ou mais cidades crescem e suas áreas construídas se encontram",["Quando uma cidade fica vazia","Quando uma cidade é dividida em duas","Quando o campo vira floresta"],"As cidades crescem tanto que acabam ficando coladas uma na outra."],
+["🏭","Qual destas atividades pertence ao setor secundário?","Fabricação de roupas",["Plantar milho","Atender em um hospital","Vender em uma loja"],"Primário: retira da natureza (agricultura, pecuária). Secundário: transforma (indústria). Terciário: comércio e serviços (lojas, hospitais)."]
+];
+var BQ=[
+["🚜","O que caracteriza a agricultura intensiva?","Uso de técnicas, máquinas, fertilizantes e sementes selecionadas para produzir mais",["Plantar só para a família comer","Não usar nenhuma tecnologia","Criar animais em pastagens"],"Intensiva: mais produtividade em determinada área.",1],
+["♻️","Qual prática ajuda a conservar a fertilidade do solo?","Rotação de culturas",["Plantar sempre a mesma cultura","Deixar o solo sem proteção","Gastar água sem controle"],"Alternar as plantas, adubar e proteger contra a erosão conserva o solo.",1],
+["🐖","Como é a pecuária intensiva?","Usa manejo, alimentação controlada e tecnologia em espaços menores",["Animais soltos em enormes pastagens","Sem nenhuma tecnologia","Só criação de animais silvestres"],"Extensiva: grandes áreas. Intensiva: tecnologia em espaços menores.",1],
+["👍","Qual foi um benefício da Revolução Verde?","Aumento da produtividade agrícola",["Fim de todos os impactos ambientais","Menos uso de máquinas","Igualdade total entre produtores"],"Também ampliou a produção de alimentos e o uso de tecnologias.",1],
+["⚠️","Qual foi um problema da Revolução Verde?","Contaminação da água e do solo e desigualdade entre produtores",["Queda da produtividade","Abandono das máquinas","Aumento da biodiversidade"],"Trouxe avanços, mas também problemas ambientais e sociais.",1],
+["🏢","O que é o espaço urbano?","As áreas das cidades, com moradias, comércio, indústrias e serviços",["Áreas de plantações e pastagens","Áreas de floresta preservada","Áreas sem moradias"],"Nas cidades há comércio, educação, saúde, transporte, bancos e administração pública.",1],
+["🚦","Qual problema pode surgir quando a cidade cresce sem planejamento?","Falta de moradias, trânsito intenso e ocupação de áreas de risco",["Excesso de moradias vazias","Menos poluição","Aumento das áreas verdes"],"Também pode haver desigualdade social e falta de saneamento básico.",1],
+["🏫","Qual medida faz parte do planejamento urbano?","Construir e manter escolas, hospitais, praças e redes de saneamento",["Ocupar áreas de risco","Cortar o transporte público","Eliminar as áreas verdes"],"Planejar deixa a cidade mais organizada, acessível, segura e sustentável.",1],
+["🌆","Onde a conurbação costuma ocorrer?","Em regiões metropolitanas, com cidades próximas e muito ligadas",["Em áreas rurais isoladas","Só no meio de florestas","Em cidades sem nenhum vizinho"],"As cidades mantêm relações econômicas e sociais intensas.",1],
+["🎣","Qual atividade pertence ao setor primário?","Pesca",["Indústria automobilística","Banco","Restaurante"],"Primário: agricultura, pecuária, pesca e extrativismo.",1],
+["🔗","Como os três setores da economia se relacionam?","A agricultura fornece matéria-prima à indústria, que produz mercadorias vendidas pelo comércio",["Não têm nenhuma relação","Só o setor terciário produz algo","A indústria nunca usa matéria-prima"],"Terciário: lojas, bancos, escolas, hospitais, transporte e restaurantes.",1]
+];
+var QA=Q.slice(),i,xp,lives,ok,locked,limit=60,tend,tid;
+var AC,master,mt,step=0,musicOn=true;
+var TRACKS=[
+{n:[261.63,329.63,392,440,392,329.63,293.66,349.23,440,523.25,440,349.23],b:[130.81,174.61,196,174.61],ms:260,w:"triangle",g:1},
+{n:[220,261.63,329.63,392,329.63,261.63,246.94,293.66,349.23,440,349.23,293.66],b:[110,110,130.81,123.47],ms:220,w:"square",g:.35},
+{n:[293.66,369.99,440,587.33,440,369.99,329.63,392,493.88,392,329.63,293.66],b:[146.83,196,164.81,196],ms:340,w:"sine",g:1.2},
+{n:[392,493.88,587.33,493.88,440,523.25,659.25,523.25,392,349.23,440,349.23],b:[196,196,174.61,220],ms:180,w:"triangle",g:1}
+],T=TRACKS[0],lastT=-1;
+function tone(f,t,d,type,g){var o=AC.createOscillator(),v=AC.createGain();o.type=type;o.frequency.value=f;v.gain.setValueAtTime(g,t);v.gain.exponentialRampToValueAtTime(.001,t+d);o.connect(v);v.connect(master);o.start(t);o.stop(t+d)}
+function beat(){if(!musicOn||!AC)return;var t=AC.currentTime+.05;tone(T.n[step%T.n.length],t,.3,T.w,.5*T.g);if(step%3===0)tone(T.b[(step/3|0)%4],t,.6,"sine",.8);step++}
+function musicStart(){try{if(!AC){AC=new (window.AudioContext||window.webkitAudioContext)();master=AC.createGain();master.gain.value=.07;master.connect(AC.destination)}AC.resume();clearInterval(mt);var r;do{r=Math.floor(Math.random()*TRACKS.length)}while(r===lastT);lastT=r;T=TRACKS[r];step=0;mt=setInterval(beat,T.ms)}catch(e){}}
+function sfx(good){try{if(!AC||!musicOn)return;var t=AC.currentTime;if(good){tone(660,t,.15,"square",.6);tone(880,t+.12,.25,"square",.6)}else{tone(200,t,.3,"sawtooth",.7)}}catch(e){}}
+function fmt(s){return Math.floor(s/60)+":"+("0"+s%60).slice(-2)}
+function stopTimer(){clearInterval(tid)}
+function startTimer(){stopTimer();tend=Date.now()+limit*1000;tick();tid=setInterval(tick,250)}
+function tick(){var s=Math.max(0,Math.ceil((tend-Date.now())/1000));$("timer").textContent="⏱️ "+fmt(s);$("timer").className="timer"+(s<=10?" low":"");if(s===0&&!locked)pick(null,null)}
+var $=function(id){return document.getElementById(id)};
+function show(id){["start","sum","game","end"].forEach(function(s){$(s).classList.toggle("on",s===id)});window.scrollTo(0,0)}
+function shuffle(a){a=a.slice();for(var k=a.length-1;k>0;k--){var j=Math.floor(Math.random()*(k+1));var t=a[k];a[k]=a[j];a[j]=t}return a}
+function hearts(){$("hearts").textContent="❤️".repeat(lives)+"🖤".repeat(3-lives)}
+function render(){
+  var q=Q[i];locked=false;
+  $("ic").textContent=q[0];$("num").textContent="Desafio "+(i+1)+" de "+Q.length+(q[5]?" · 🎁 Bônus":" · ⭐ Prioridade");$("qt").textContent=q[1];
+  $("fill").style.width=(i/Q.length*100)+"%";$("xp").textContent=xp+" XP";hearts();
+  var box=$("opts");box.innerHTML="";
+  shuffle([q[2]].concat(q[3])).forEach(function(t,k){
+    var b=document.createElement("button");b.className="opt";
+    b.innerHTML="<b>"+"ABCD"[k]+"</b><span></span>";b.lastChild.textContent=t;
+    b.onclick=function(){pick(b,t)};box.appendChild(b)});
+  $("fb").className="fb";$("next").className="btn next";$("skip").style.display=i<Q.length-1?"":"none";startTimer();
+}
+function pick(btn,t){
+  if(locked)return;locked=true;stopTimer();var q=Q[i],good=t===q[2];sfx(good);$("skip").style.display="none";
+  [].forEach.call($("opts").children,function(b){b.disabled=true;if(b.lastChild.textContent===q[2])b.classList.add("ok")});
+  var f=$("fb");
+  if(good){ok++;xp+=100;btn.classList.add("ok");f.className="fb show g";f.innerHTML="<strong>✅ Mandou bem! +100 XP</strong>"}
+  else{lives--;if(btn)btn.classList.add("no");f.className="fb show r";f.innerHTML=btn?"<strong>💥 Quase! Você perdeu uma vida.</strong>":"<strong>⏰ O tempo acabou! Você perdeu uma vida.</strong>"}
+  var s=document.createElement("span");s.textContent=q[4];f.appendChild(s);
+  $("xp").textContent=xp+" XP";hearts();
+  $("next").textContent=(lives===0||i===Q.length-1)?"Ver resultado 🏆":"Próximo desafio ➜";
+  $("next").className="btn next show";
+  $("next").scrollIntoView({behavior:"smooth",block:"nearest"});
+}
+function finish(){stopTimer();
+  var p=ok/Q.length,st=p>=.9?3:p>=.6?2:p>=.3?1:0;
+  $("stars").textContent="⭐".repeat(st)+"☆".repeat(3-st);
+  $("fscore").textContent=xp+" XP";
+  $("rank").textContent=p>=.9?"🏅 Mestre da Geografia":p>=.6?"🧭 Explorador":"🌱 Aprendiz";
+  $("msg").textContent="Você acertou "+ok+" de "+Q.length+" desafios."+(lives===0?" Suas vidas acabaram, mas dá para tentar de novo!":p>=.9?" Você está pronto para a prova!":" Revise as explicações e jogue outra vez.");
+  $("fill").style.width="100%";show("end");
+}
+function start(){Q=shuffle(QA).concat(shuffle(BQ));i=0;xp=0;lives=3;ok=0;show("game");render()}
+[].forEach.call(document.querySelectorAll(".lvl"),function(b){b.onclick=function(){limit=+b.dataset.t;musicStart();start()}});
+$("again").onclick=function(){stopTimer();show("start")};
+$("rs").onclick=function(){show("sum")};
+$("sback").onclick=function(){show("start")};
+$("home").onclick=function(){stopTimer();show("start")};
+$("skip").onclick=function(){if(locked||i>=Q.length-1)return;Q.push(Q.splice(i,1)[0]);render()};
+$("mute").onclick=function(){musicOn=!musicOn;$("mute").textContent=musicOn?"🔊":"🔇";if(musicOn&&AC)AC.resume()};
+$("next").onclick=function(){if(lives===0||i===Q.length-1){finish()}else{i++;render();window.scrollTo(0,0)}};
+</script>
+</body>
+</html>
